@@ -1,0 +1,250 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Dissertationen mit LaTeX auf dem edoc-Server
+%
+% Humboldt-Universitaet zu Berlin
+% Computer- und Medienservice
+% Arbeitsgruppe Elektronisches Publizieren
+% Bezug der Vorlage und der Richtlinien:
+%     http://edoc.hu-berlin.de/e_autoren/latex/
+%
+% Kontakt:
+%     E-Mail:
+%                   edoc-latex@rz.hu-berlin.de
+%     Telefon:              siehe
+%     http://edoc.hu-berlin.de/e_autoren/latex/kontakt.php  %
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Das folgende Template muss fuer die Publikation von digitalen       %
+% Dissertationen in LaTeX an der Humboldt-Universitaet benutzt werden.%
+%
+% Aendern Sie den Name dieser Datei auf ihren_nachname.tex.           %
+%
+% Die mit einem Stern (*) gekennzeichnete Teile sind optional;        %
+% falls Sie sie nicht verwenden moechten, sind entsprechende Zeilen   %
+% zu entfernen.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \listfiles    % Erstellt eine Liste von allen benutzten Dateien
+% zusammen mit ihrer Versionen
+% und ggf. einer kurzen Beschreibung
+% Sie wird in die log-Datei geschrieben
+
+\documentclass[12pt,a4paper,twoside%,openright% die Verwendung von DIN-A4-Format ist pflicht!
+]{scrreprt}
+\usepackage[top=2cm, bottom=2.5cm, left=3cm, right=3cm,footskip=1.25cm]{geometry}
+
+%notwendige Pakete
+\usepackage[ngerman, english]{babel}    % mehrsprachiger Textsatz
+% babel: letzte Sprache in Optionen zeigt die Sprache des Dokumentes
+% und kann durch den Befehl \selectlanguage{} geaendert werden
+% Passen Sie die Optionen des babel-Paketes nach Bedarf an!
+\usepackage[utf8]{inputenc}       % Eingabekodierung Parameter latin1 darf geaendert werden
+\usepackage[T1]{fontenc}                % Schriftenkodierung
+\usepackage{graphicx}                       % zum Einbinden von Grafiken
+\usepackage{lmodern}                        % Ersatz fuer Computer Modern-Schriften
+\usepackage{marvosym}                       % zum besseren Aussehen am Bildschirm
+\usepackage{subcaption}
+\usepackage{amssymb}
+\usepackage{lineno}
+\usepackage{slashed}
+\usepackage{amsmath}
+\usepackage{empheq}
+%\usepackage{fancyhdr}
+\usepackage{scrlayer-scrpage}
+\usepackage{overpic}
+\usepackage{tikz}
+\usetikzlibrary{fit}
+\usepackage{sidecap}
+\usepackage{siunitx}
+\usepackage{booktabs}
+%\usepackage[nottoc]{tocbibind}
+%\usepackage[force]{feynmp-auto}
+%\usepackage{feynmf}
+%\usepackage{feynmp}
+\usepackage[babel,german=quotes]{csquotes}
+\usepackage{textcomp}
+\usepackage{breqn}
+\usepackage{bm}
+\usepackage{scrhack}
+\setcapindent{10pt}
+%\usepackage{xcolor}
+%\usepackage[format=plain]{caption}
+
+% biblatex and modifications
+\usepackage[hyperref=true, backend=biber, parentracker=true, backref=true, sorting=none, citestyle=numeric-comp]{biblatex}
+\ExecuteBibliographyOptions{isbn=false, doi=true, url=false}
+\ExecuteBibliographyOptions{backref=true}
+\ExecuteBibliographyOptions{abbreviate=true}
+\ExecuteBibliographyOptions{eprint=false}
+%\ExecuteBibliographyOptions{giveninits=true}
+\addbibresource{bibliography.bib}
+
+\DefineBibliographyStrings{english}{%
+   bibliography = {References},
+}
+%\usepackage{natbib}
+%\usepackage[clearempty]{titlesec}\
+\PassOptionsToPackage{hyphens}{url}
+\include{metadata}                          % Bitte ALLE Angaben erfuellen!
+\include{compatibility}                     % hyperref!!!!
+
+% Stuff after(!) hyperref
+%\DeclareFieldFormat*{title}{\usebibmacro{string}{\mkbibquote{#1}}}
+\newbibmacro{string+doiurlisbn}[1]{%
+  \iffieldundef{url}{%
+    \iffieldundef{doi}{%    
+      #1
+     }{%
+       \href{http://dx.doi.org/\thefield{doi}}{#1}%
+    }%
+  }{%
+      \href{\thefield{url}}{#1}%
+  }%
+}
+\DeclareFieldFormat*{title}{\usebibmacro{string+doiurlisbn}{\mkbibquote{#1}}}
+\renewcommand\newunitpunct{\addcomma\addspace} % komma statt punkt!!!!
+
+% cleverref for easy referencing
+\usepackage[capitalize]{cleveref}
+\Crefname{figure}{Figure}{Figures}
+\crefname{figure}{Fig.}{Figs.}
+\Crefname{table}{Table}{Tables}
+\crefname{table}{Tab.}{Tabs.}
+% remove parenthesis from equation references
+\creflabelformat{equation}{#2#1#3}
+
+\clubpenalty10000
+\widowpenalty10000
+\displaywidowpenalty=1000000
+
+% Supress warning: multiple pdfs with page group included ....
+\pdfsuppresswarningpagegroup=1
+
+% header: ro chapter, lo section
+\automark[]{chapter}
+\automark*[section]{}
+
+% nicer primed vector
+\newcommand{\pvec}[1]{\vec{#1}\mkern2mu\vphantom{#1}}
+\emergencystretch=1em
+%-Eigene Trennregeln*---------------------------------------------
+
+% \include{hyphenations}
+
+%-zusaetzliche Kommandos*-----------------------------------------
+
+%\include{command}
+
+
+
+%-Dokument--------------------------------------------------------
+
+\begin{document}
+\unitlength = 1mm
+% Es muss zitiert werden koennen! Im Vorspann roemisch,
+% Im Hauptteil benutzt man arabische Nummerierung.
+\pagenumbering{roman}
+
+%-Titelblatt------------------------------------------------------
+\selectlanguage{english}
+%\begin{titlepage}
+\include{titlepage}                         % Bitte KEINE Aenderungen vornehmen!
+\maketitle
+%\thispagestyle{empty}~
+%\end{titlepage}
+
+%\cleardoublepage
+%\newpage
+%\thispagestyle{empty}~
+
+
+%-Zusammenfassung / Abstract*-------------------------------------
+
+\include{abstract}
+\selectlanguage{english}               % Bitte an die Sprache denken!!!
+%\setcounter{page}{4}                   %   Bitte an die Seitenzahl denken!!!
+
+%-Widmung*--------------------------------------------------------
+
+% \include{dedication}
+
+%-Inhaltsverzeichnis----------------------------------------------
+
+\selectlanguage{english}
+\cleardoublepage
+\tableofcontents
+\clearpage
+
+
+\KOMAoptions{open=right}
+%\cleardoublepage
+
+%-Hauptteil-------------------------------------------------------
+
+\pagenumbering{arabic}
+\pagestyle{scrheadings}                  % bzw. ist fancyhdr zu benutzten
+
+%-Kapitel---------------------------------------------------------
+
+% part ist optional, bitte ggf. loeschen
+% \part{Teil1}
+%\linenumbers
+%\cleardoublepage
+
+\include{introduction}
+%\KOMAoptions{open=any}
+\include{chapter01}
+%\include{chapter02}
+\include{summary}
+
+%-Anhang----------------------------------------------------------
+
+\appendix
+
+%-Kapitel des Anhangs---------------------------------------------
+
+\include{appendixA}
+%\include{appendixB}
+%usw.
+
+
+%-Literaturverzeichnis--------------------------------------------
+
+%\nocite{*}
+%die Verwendung von bibtex ist Pflicht!!!
+\addcontentsline{toc}{chapter}{\listfigurename}
+\listoffigures
+\clearpage
+
+\addcontentsline{toc}{chapter}{\listtablename}
+\listoftables
+\clearpage
+
+\printbibliography[heading=bibintoc]
+\clearpage
+%\bibliography{bibliography}
+%\bibliographystyle{unsrtdinmod}        %bzw. unsrtdin, alphadin, abbrvdin, plaindin, elsarticle-num
+
+
+%-Abkuerzungen*---------------------------------------------------
+ 
+%\include{abbreviations}
+
+%-Danksagung*-----------------------------------------------------
+
+%\include{acknowledgement}
+
+%-Lebenslauf*-----------------------------------------------------
+
+%\include{cv}
+
+%-Selbstaendigkeiterklaerung--------------------------------------
+
+\include{declaration}
+
+%-----------------------------------------------------------------
+
+\end{document}
